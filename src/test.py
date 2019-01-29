@@ -1,6 +1,3 @@
-# pydcm
-
-```python
 from pydcm import dcminfo
 
 dcm = dcminfo()
@@ -23,18 +20,3 @@ print(DEMO_CURVE)
 
 DEMO_MAP_2 = dcm.getcalobject("calibration", "DEMO_MAP_2")
 DEMO_MAP_2.show()
-```
-
-![image](/image/DEMO_MAP_2.png)
-
-# English
-
-dcm(Data Conservation Format) is a calibration data format, it's extension is .dcm. INCA, CANape and other calibration tool support this. 
-
-This repro is a dcm library in python, which is used for read and write dcm file.
-
-#  中文
-
-dcm（Data Conservation Format）是一种标定数据格式，后缀是.dcm，INCA/CANape等标定工具都支持。
-
-本项目是使用python开发的dcm库，用于读写dcm。
