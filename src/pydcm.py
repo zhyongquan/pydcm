@@ -136,6 +136,7 @@ class dcminfo:
     calobjects = {"functions": functions, "calibrations": calibrations, "axises": axises}
     line_count = 0
     regex = r"(\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\")|(?:[^\\ \t]+)"
+    keywords = {"FESTWERT": "VALUE", "KENNLINIE": "CURVE", "KENNFELD": "MAP"}
 
     def __init__(self):
         self.functions = {}
@@ -198,21 +199,15 @@ class dcminfo:
                     if txt[1] == "FKT":
                         # function
                         fun = function(txt[2])
-                        txt = line.split('"')
                         fun.description = txt[4]
                         fun.line_start = line_count
                         fun.line_end = line_count
                         self.addfunction(fun)
-                    elif txt[1] == "FESTWERT" or txt[1] == "KENNLINIE" or txt[1] == "KENNFELD":
+                    elif txt[1] in self.keywords.keys():
                         # calibration block
                         cal = calibration(txt[2])
+                        cal.type = self.keywords[txt[1]]
                         cal.line_start = line_count
-                        if txt[1] == "FESTWERT":
-                            cal.type = "VALUE"
-                        elif txt[1] == "KENNLINIE":
-                            cal.type = "CURVE"
-                        elif txt[1] == "KENNFELD":
-                            cal.type = "MAP"
                     elif txt[1] == "LANGNAME":
                         cal.description = txt[2]
                     elif txt[1] == "FUNKTION":
